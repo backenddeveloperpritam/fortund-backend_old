@@ -39,7 +39,11 @@ const astrologerLogin = asyncHandler(async (req, res) => {
     }
 
     if (astrologer.isDeleted === 1) {
-        throw new ApiError(400, "Your account has been deactivated, please contact admin support.");
+        throw new ApiError(400, "Your account has been deleted, please contact admin support.");
+    }
+
+    if (astrologer.status == "InActive") {
+        throw new ApiError(400, "Your account has been Blocked, please contact admin support.");
     }
 
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(astrologer._id, fcmToken)
@@ -98,5 +102,26 @@ const astrologerList = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, result, "Astrologers fetched successfully"));
 });
 
+const changeCallStatus = asyncHandler(async (req, res) => {
+    const { astrologerId, callStatus } = req.body;
 
-export { astrologerLogin, logoutAstrologer, astrologerList };
+    const result = await astrologerService.changeCallStatus(astrologerId,callStatus);
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No Astrologer found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, result, "Astrologers fetched successfully"));
+})
+
+const changeChatStatus = asyncHandler(async (req, res) => {
+    const { astrologerId, chatStatus } = req.body;
+
+    const result = await astrologerService.changeChatStatus(astrologerId,chatStatus);
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No Astrologer found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, result, "Astrologers fetched successfully"));
+})
+
+export { astrologerLogin, logoutAstrologer, astrologerList,changeCallStatus,changeChatStatus };

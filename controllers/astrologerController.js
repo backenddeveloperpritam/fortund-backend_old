@@ -441,17 +441,17 @@ const getActiveAstrologer = async function (req, res) {
     if (type == 'chat') {
       astrologer.docs.sort((a, b) => {
         // Prioritize online astrologers first
-        if (a.chat_status === 'Online' && (b.chat_status === 'Busy' || b.chat_status === 'Offline')) return -1;
-        if (b.chat_status === 'Online' && (a.chat_status === 'Busy' || a.chat_status === 'Offline')) return 1;
-        // If both have the same chat_status or both are not online, maintain their order
+        if (a.chatStatus === 'Online' && (b.chatStatus === 'Busy' || b.chatStatus === 'Offline')) return -1;
+        if (b.chatStatus === 'Online' && (a.chatStatus === 'Busy' || a.chatStatus === 'Offline')) return 1;
+        // If both have the same chatStatus or both are not online, maintain their order
         return 0;
       });
     } else {
       astrologer.docs.sort((a, b) => {
         // Prioritize online astrologers first
-        if (a.call_status === 'Online' && (b.call_status === 'Busy' || b.call_status === 'Offline')) return -1;
-        if (b.call_status === 'Online' && (a.call_status === 'Busy' || a.call_status === 'Offline')) return 1;
-        // If both have the same chat_status or both are not online, maintain their order
+        if (a.callStatus === 'Online' && (b.callStatus === 'Busy' || b.callStatus === 'Offline')) return -1;
+        if (b.callStatus === 'Online' && (a.callStatus === 'Busy' || a.callStatus === 'Offline')) return 1;
+        // If both have the same chatStatus or both are not online, maintain their order
         return 0;
       });
     }
@@ -1649,7 +1649,7 @@ const changeAstrologerStatus = async function (req, res) {
 
 // change chat status
 const changeChatStatus = async function (req, res) {
-  const { astrologerId, chat_status } = req.body;
+  const { astrologerId, chatStatus } = req.body;
 
   try {
     const astrologer = await Astrologer.findById(astrologerId);
@@ -1676,7 +1676,7 @@ const changeChatStatus = async function (req, res) {
       });
     } else {
       // Update the astrologer_status field
-      astrologer.chat_status = chat_status;
+      astrologer.chatStatus = chatStatus;
 
       // Save the updated astrologer data
       await astrologer.save();
@@ -1699,7 +1699,7 @@ const changeChatStatus = async function (req, res) {
 
 // change call status
 const changeCallStatus = async function (req, res) {
-  const { astrologerId, call_status } = req.body;
+  const { astrologerId, callStatus } = req.body;
 
   try {
     const astrologer = await Astrologer.findById(astrologerId);
@@ -1725,7 +1725,7 @@ const changeCallStatus = async function (req, res) {
         message: `You are not verified yet, please contact to the support`,
       });
     } else {
-      astrologer.call_status = call_status;
+      astrologer.callStatus = callStatus;
 
       // Save the updated astrologer data
       await astrologer.save();
@@ -1737,10 +1737,10 @@ const changeCallStatus = async function (req, res) {
       });
     }
   } catch (error) {
-    console.error("Error updating astrologer call_status:", error);
+    console.error("Error updating astrologer callStatus:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to update astrologer call_status.",
+      message: "Failed to update astrologer callStatus.",
       error: error.message,
     });
   }
@@ -1854,7 +1854,7 @@ const checkChatStatus = async function (req, res) {
     }
 
     const status = {
-      chat_status: astrologer.chat_status,
+      chatStatus: astrologer.chatStatus,
     };
 
     res.status(200).json({ success: true, status });
@@ -1882,7 +1882,7 @@ const checkCallStatus = async function (req, res) {
     }
 
     const status = {
-      call_status: astrologer.call_status,
+      callStatus: astrologer.callStatus,
     };
 
     res.status(200).json({ success: true, status });

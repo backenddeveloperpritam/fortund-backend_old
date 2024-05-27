@@ -38,8 +38,8 @@ const logoutAstrologer = async (astrologerId) => {
         astrologerId,
         {
             $set: {
-                chat_status: "Offline",
-                call_status: "Offline"
+                chatStatus: "Offline",
+                callStatus: "Offline"
             }
         },
         {
@@ -56,6 +56,29 @@ const getAstrologerById = async (id) => {
     return astrologer;
 }
 
+const changeCallStatus = async (astrologerId, status) => {
+    const astrologer = await Astrologer.findById(astrologerId);
+    if (!astrologer) {
+        throw new ApiError(500, "Internal Server Error - Astrologers Not found !");
+    }
 
+    astrologer.callStatus = status;
 
-export { getAstrologer, loginAstrologer, logoutAstrologer, getAstrologerById };
+    await astrologer.save();
+
+    return astrologer;
+};
+const changeChatStatus = async (astrologerId, status) => {
+    const astrologer = await Astrologer.findById(astrologerId);
+    if (!astrologer) {
+        throw new ApiError(500, "Internal Server Error - Astrologers Not found !");
+    }
+
+    astrologer.chatStatus = status;
+
+    await astrologer.save();
+
+    return astrologer;
+};
+
+export { getAstrologer, loginAstrologer, logoutAstrologer, getAstrologerById, changeCallStatus, changeChatStatus };

@@ -23,4 +23,17 @@ router.get(
 );
 
 
+router.post(
+    "/astrologer-change-call-status",
+    validate(astrologerValidation.changeCallStatus),
+    astrologerController.changeCallStatus
+);
+
+router.post(
+    "/astrologer-change-chat-status",
+    validate(astrologerValidation.changeChatStatus),
+    astrologerController.changeChatStatus
+);
+
+
 export default router;

@@ -215,9 +215,6 @@ const astrologerSchema = new mongoose.Schema({
     enum: ["Active", "InActive"],
     default: "Active",
   },
-  isBlocked: {
-    type: Boolean,
-  },
   isDeleted: {
     type: Number,
     default: 0,
@@ -243,12 +240,12 @@ const astrologerSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  chat_status: {
+  chatStatus: {
     type: String, // offline, online, busy
     enum: ["Offline", "Online", "Busy"],
     default: "Offline",
   },
-  call_status: {
+  callStatus: {
     type: String, // offline, online, busy
     enum: ["Offline", "Online", "Busy"],
     default: "Offline",

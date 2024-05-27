@@ -104,11 +104,11 @@ const CustomerSchema = new Schema({
         type: Boolean,
         default: false
     },
-    chat_status: {
+    chatStatus: {
         type: Boolean,
         default: false
     },
-    call_status: {
+    callStatus: {
         type: Boolean,
         default: false
     },

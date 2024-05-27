@@ -1046,7 +1046,7 @@ const sendNotificationToCustomer = async (req, res) => {
       body: astrologerData,
     };
 
-    astrologer.chat_status = "busy";
+    astrologer.chatStatus = "busy";
     await astrologer.save();
 
     await sendNotification.sendNotification(deviceToken, notification);

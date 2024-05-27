@@ -77,6 +77,18 @@ const updateAstrologer = {
         status: Joi.string().valid("Active", "InActive").optional(),
     }),
 };
+const changeCallStatus = {
+    body: Joi.object().keys({
+        astrologerId: Joi.string().required(),
+        callStatus: Joi.string().valid("Offline", "Online", "Busy").required(),
+    }),
+};
+const changeChatStatus = {
+    body: Joi.object().keys({
+        astrologerId: Joi.string().required(),
+        chatStatus: Joi.string().valid("Offline", "Online", "Busy").required(),
+    }),
+};
 
 
 const loginAstrologer = {
@@ -98,4 +110,6 @@ export {
     addNewAstrologer,
     updateAstrologer,
     loginAstrologer,
+    changeCallStatus,
+    changeChatStatus
 };
