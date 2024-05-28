@@ -3,29 +3,23 @@ import Astrologer from "../models/adminModel/Astrologer.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
 const getAstrologer = async (title) => {
-    try {
-        const titleMatch = { "displayName": { "$regex": title, "$options": "i" } };
+    const titleMatch = { "displayName": { "$regex": title, "$options": "i" } };
 
-        const astrologers = await Astrologer.find({
-            ...titleMatch,
-        });
+    const astrologers = await Astrologer.find({
+        ...titleMatch,
+    });
 
-        return astrologers; 
-    } catch (error) {
-        throw new ApiError(500, "Internal Server Error - Astrologers Not Fetched");
-    }
+    return astrologers;
+
 };
 
 const getAstrologerById = async (id) => {
-    try {
-        const astrologer = await Astrologer.findOne({ _id: id });
-        if (!astrologer) {
-            throw new ApiError(404, "Astrologer not found");
-        }
-        return astrologer;
-    } catch (error) {
-        throw new ApiError(500, "Internal Server Error - Astrologer Not Fetched");
+    const astrologer = await Astrologer.findOne({ _id: id });
+    if (!astrologer) {
+        return null;
     }
+    return astrologer;
+
 }
 
 const addNewAstrologer = async (body, files) => {
@@ -75,16 +69,15 @@ const addNewAstrologer = async (body, files) => {
         status,
     } = body;
 
-    const existingAstrologer = await Astrologer.findOne({ phoneNumber });
+    const existingAstrologer = await Astrologer.findOne({ $or: [{ phoneNumber }, { email }] });
     if (existingAstrologer) {
-        throw new Error("Astrologer with this phone number already exists.");
+        throw new Error("Astrologer with this phone number or email already exists.");
     }
-
 
     const skillArray = Array.isArray(skill) ? skill : [];
     const remediesArray = Array.isArray(remedies) ? remedies : [];
     const expertiseArray = Array.isArray(expertise) ? expertise : [];
-    
+
     // File upload handling
     const profileImagePath = files.profileImage ? files.profileImage[0].path : "";
     const idProofImagePath = files.idProofImage ? files.idProofImage[0].path : "";
@@ -187,4 +180,43 @@ const updateAstrologer = async (id, updatedFields) => {
 }
 
 
-export { getAstrologer, getAstrologerById, addNewAstrologer, updateAstrologer };
+const changeCallStatus = async (astrologerId, status) => {
+    const astrologer = await Astrologer.findById(astrologerId);
+    if (!astrologer) {
+        return null;
+    }
+
+    astrologer.callStatus = status;
+
+    await astrologer.save();
+
+    return astrologer;
+};
+
+const changeChatStatus = async (astrologerId, status) => {
+    const astrologer = await Astrologer.findById(astrologerId);
+    if (!astrologer) {
+        return null;
+    }
+
+    astrologer.chatStatus = status;
+
+    await astrologer.save();
+
+    return astrologer;
+};
+
+const changeStatus = async (astrologerId, status) => {
+    const astrologer = await Astrologer.findById(astrologerId);
+    if (!astrologer) {
+        return null;
+    }
+
+    astrologer.status = status;
+
+    await astrologer.save();
+
+    return astrologer;
+};
+
+export { getAstrologer, getAstrologerById, addNewAstrologer, changeCallStatus, changeChatStatus, changeStatus, updateAstrologer };

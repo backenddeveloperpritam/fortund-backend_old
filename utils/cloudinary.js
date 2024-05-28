@@ -9,6 +9,7 @@ dotenv.config();
 //     api_key: "274212448482754",
 //     api_secret: "cPjNHnpbjgBjeTBJ8X7KvLYdjD4"
 // });
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -32,6 +33,15 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
+const deleteFromCloudinary = async (imageUrl) => {
+    try {
+        const publicId = imageUrl.split('/').pop().split('.')[0];
+        await cloudinary.uploader.destroy(publicId);
+    } catch (error) {
+        console.error('Error deleting old image from Cloudinary:', error);
+    }
+};
 
 
-export { uploadOnCloudinary }
+
+export { uploadOnCloudinary, deleteFromCloudinary }

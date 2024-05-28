@@ -66,7 +66,7 @@ const addNewAstrologer = Joi.object({
     expertise: Joi.array().items(Joi.string()).required(),
     remedies: Joi.array().items(Joi.string()).optional(),
     astrologerType: Joi.string().valid("Consultation", "Teaching", "Pandit", "All").required(),
-    status: Joi.string().valid("Active", "InActive").required(),
+    status: Joi.string().valid("Active", "Blocked").required(),
 }).options({ allowUnknown: true });
 
 
@@ -74,7 +74,7 @@ const addNewAstrologer = Joi.object({
 const updateAstrologer = {
     body: Joi.object().keys({
         title: Joi.string().required(),
-        status: Joi.string().valid("Active", "InActive").optional(),
+        status: Joi.string().valid("Active", "Blocked").optional(),
     }),
 };
 const changeCallStatus = {
@@ -87,6 +87,13 @@ const changeChatStatus = {
     body: Joi.object().keys({
         astrologerId: Joi.string().required(),
         chatStatus: Joi.string().valid("Offline", "Online", "Busy").required(),
+    }),
+};
+
+const changeStatus = {
+    body: Joi.object().keys({
+        astrologerId: Joi.string().required(),
+        status: Joi.string().valid("Active", "Blocked").required(),
     }),
 };
 
@@ -111,5 +118,6 @@ export {
     updateAstrologer,
     loginAstrologer,
     changeCallStatus,
-    changeChatStatus
+    changeChatStatus,
+    changeStatus
 };
