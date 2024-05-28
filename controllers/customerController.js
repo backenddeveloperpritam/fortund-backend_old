@@ -210,7 +210,7 @@ const verifyCustomer = async function (req, res) {
       const deviceToken = customer?.fcmToken;
       if (deviceToken) {
         const notification = {
-          title: "AstroKunj",
+          title: "FortuneTalk",
           body: "You are logged in new device",
         };
         const data = {
@@ -298,7 +298,7 @@ const customerGoogleLogin = async function (req, res) {
 
       if (deviceToken) {
         const notification = {
-          title: "AstroKunj",
+          title: "FortuneTalk",
           body: "You are logged in new device",
         };
         const data = {
@@ -839,7 +839,7 @@ const rechargeCustomerWallet = async function (req, res) {
     }
 
     const totalWalletRecharge = (await RechargeWallet.find()).length;
-    const invoiceId = `#ASTROKUNJ${totalWalletRecharge}`;
+    const invoiceId = `#FORTUNETALK${totalWalletRecharge}`;
     let rechargeAmount = parseFloat(amount);
     const history = {
       customer: customerId,
@@ -1587,7 +1587,7 @@ const initiateChat = async (req, res) => {
     // Create a new entry in CallHistory table
 
     const totalChat = await ChatHistory.find();
-    let inoiceId = "ASTROKUNJ" + totalChat.length.toString();
+    let inoiceId = "FORTUNETALK" + totalChat.length.toString();
     const newChat = new ChatHistory({
       formId,
       customerId,
@@ -1991,7 +1991,7 @@ const initateLiveStreaming = async (req, res) => {
 
 
     const totalChat = await LiveStreaming.find().countDocuments();
-    let liveId = "ASTROKUNJ_LIVE_" + totalChat.toString();
+    let liveId = "FORTUNETALK_LIVE_" + totalChat.toString();
 
     const liveStreaming = new LiveStreaming({
       astrologerId,
