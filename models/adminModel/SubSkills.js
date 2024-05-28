@@ -1,17 +1,38 @@
 import mongoose from 'mongoose';
 
 const subSkillSchema = new mongoose.Schema({
-  subskill: {
+  title: {
     type: String,
     required: true,
-    unique: true // Ensures each subskill name is unique
+    unique: true,
   },
-  description: String,
+  description: {
+    type: String,
+    default: '',
+  },
   skill: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Skills'
-  }
+    ref: 'Skills',
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['Active', ' InActive'],
+    default: 0,
+  },
+  isDeleted: {
+    type: Number,
+    default: 0,
+  },
 }, { collection: 'SubSkills', timestamps: true });
+
+subSkillSchema.pre('find', function () {
+  this.where({ isDeleted: { $ne: 1 } });
+});
+
+subSkillSchema.pre('findOne', function () {
+  this.where({ isDeleted: { $ne: 1 } });
+});
 
 const SubSkills = mongoose.model('SubSkills', subSkillSchema);
 
