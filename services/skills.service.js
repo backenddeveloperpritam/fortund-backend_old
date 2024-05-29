@@ -43,34 +43,36 @@ const addNewSkill = async (body, file) => {
     return skill;
 }
 
-
 const updateSkill = async (body, file) => {
-    const { title, status } = body;
+    const { skillId, title, status } = body;
 
     if (!file || !file.path) {
         throw new ApiError(400, "Image file is required");
     }
 
-    const existSkill = await Skill.findOne({ title: title });
+    // Find the skill by ID
+    const skill = await Skill.findById(skillId);
 
-    if (existSkill) {
-        throw new ApiError(400, "Skill already exist");
+    if (!skill) {
+        throw new ApiError(404, "Skill not found");
     }
 
+    // Upload new image
     const skillImage = await uploadOnCloudinary(file.path);
     if (!skillImage || !skillImage.url) {
         throw new ApiError(500, "Failed to upload image");
     }
 
-    const skill = await Skill.create({
-        title,
-        status,
-        image: skillImage.url,
-    });
+    // Update skill properties
+    skill.title = title;
+    skill.status = status;
+    skill.image = skillImage.url;
+
+    // Save the updated skill
+    await skill.save();
 
     return skill;
 }
-
 
 
 const changeStatus = async (skillId, status) => {

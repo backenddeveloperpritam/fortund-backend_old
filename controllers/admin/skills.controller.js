@@ -11,10 +11,6 @@ const skillsList = asyncHandler(async (req, res) => {
 
     const result = await skillService.getSkills(title);
 
-    if (!result || result.length === 0) {
-        throw new ApiError(httpStatus.NOT_FOUND, "No Skill found");
-    }
-
     return res.status(200).json(new ApiResponse(httpStatus.OK, result, "Skills fetched successfully"));
 
 });

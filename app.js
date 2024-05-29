@@ -13,6 +13,7 @@ import astrologerRequestRoute from "./routes/application/astrologerRequest.route
 import blogCategoryRoute from "./routes/admin/blogCagegory.route.js";
 import astrologerRoute from "./routes/admin/astrologer.route.js";
 import SkillRoute from "./routes/admin/skill.route.js";
+import SubSkillRoute from "./routes/admin/subSkill.route.js";
 
 
 import cors from "cors";
@@ -51,6 +52,7 @@ app.use("/api/app", astrologerRequestRoute)
 app.use("/api/admin", astrologerRoute);
 app.use('/api/admin', blogCategoryRoute);
 app.use('/api/admin', SkillRoute);
+app.use('/api/admin', SubSkillRoute);
 
 
 // app.use("/api/kundli", kundliRoutes) 

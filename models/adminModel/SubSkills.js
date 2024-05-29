@@ -17,8 +17,8 @@ const subSkillSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Active', ' InActive'],
-    default: 0,
+    enum: ['Active', 'InActive'],
+    default: "Active",
   },
   isDeleted: {
     type: Number,

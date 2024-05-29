@@ -5,72 +5,60 @@ import * as subSkillService from '../../services/subSkills.service.js';
 import httpStatus from 'http-status';
 
 
-const skillsList = asyncHandler(async (req, res) => {
-
+const subSkillsList = asyncHandler(async (req, res) => {
+    console.log("test");
     const title = req.query.title || "";
 
-    const result = await subSkillService.getSkills(title);
+    const result = await subSkillService.getSubSkill(title);
 
-    if (!result || result.length === 0) {
-        throw new ApiError(httpStatus.NOT_FOUND, "No Skill found");
-    }
-
-    return res.status(200).json(new ApiResponse(httpStatus.OK, result, "Skills fetched successfully"));
+    return res.status(200).json(new ApiResponse(httpStatus.OK, result, "Sub - Skills fetched successfully"));
 
 });
 
-const getSkillsById = asyncHandler(async (req, res) => {
-    const result = await subSkillService.getSkillById(req.params.skillId);
+const getSubSkillById = asyncHandler(async (req, res) => {
+    const result = await subSkillService.getSubSkillById(req.params.subSkillId);
     if (!result) {
-        throw new ApiError(httpStatus.NOT_FOUND, "No Skill found with matching id");
+        throw new ApiError(httpStatus.NOT_FOUND, "No Sub - Skills found with matching id");
     }
-    return res.status(200).json(new ApiResponse(200, result, "Skill fetched successfully"));
+    return res.status(200).json(new ApiResponse(200, result, "Sub - Skills fetched successfully"));
 
 });
 
 
-const addNewSkills = asyncHandler(async (req, res) => {
-    const newSkill = await subSkillService.addNewSkill(req.body, req.file);
+const addNewSubSkill = asyncHandler(async (req, res) => {
+    console.log(req.body);
+    const newSkill = await subSkillService.addNewSubSkill(req.body);
     if (!newSkill) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Skill Not added !");
+        throw new ApiError(httpStatus.NOT_FOUND, "Sub - Skills Not added !");
     }
-    return res.status(200).json(new ApiResponse(200, newSkill, "Skill added successfully."));
+    return res.status(200).json(new ApiResponse(200, newSkill, "Sub - Skills added successfully."));
 
 });
 
 
-const updateSkill = asyncHandler(async (req, res) => {
-    const updatedSkill = await subSkillService.updateSkill(req.body, req.file);
+const updateSubSkill = asyncHandler(async (req, res) => {
+    const { subSkillId } = req.params;
+    const updateData = req.body;
+
+    const updatedSkill = await subSkillService.updateSubSkill(subSkillId, updateData);
     if (!updatedSkill) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Skill Not Updated !");
+        throw new ApiError(httpStatus.NOT_FOUND, "Sub - Skills Not Updated !");
     }
-    return res.status(200).json(new ApiResponse(200, updatedSkill, "Skill Updated successfully."));
+    return res.status(200).json(new ApiResponse(200, updatedSkill, "Sub - Skills Updated successfully."));
 
 });
-
-
-const updateImage = asyncHandler(async (req, res) => {
-
-    const updatedSkill = await subSkillService.updateImage(req.body, req.file);
-    if (!updatedSkill) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Skill Not Updated !");
-    }
-    return res.status(200).json(new ApiResponse(200, updatedSkill, "Skill Updated successfully."));
-
-})
 
 
 
 const changeStatus = asyncHandler(async (req, res) => {
-    const { skillId, status } = req.body;
-
-    const result = await subSkillService.changeStatus(skillId, status);
+    const { subskillId, status } = req.body;
+    const result = await subSkillService.changeStatus(subskillId, status);
     if (!result || result.length === 0) {
-        throw new ApiError(httpStatus.NOT_FOUND, "No Skill found");
+        throw new ApiError(httpStatus.NOT_FOUND, "No Sub - Skills found");
     }
 
-    return res.status(200).json(new ApiResponse(200, result, "Skill Updated successfully"));
+    return res.status(200).json(new ApiResponse(200, result, "Sub - Skills Updated successfully"));
 })
 
 
-export { skillsList, getSkillsById, addNewSkills, updateSkill, updateImage, changeStatus };
+export { subSkillsList, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus };
