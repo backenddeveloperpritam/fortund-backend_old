@@ -17,7 +17,8 @@ const getSubSkillById = async (id) => {
 
 const addNewSubSkill = async (body) => {
     const { title, description, skill, status } = body;
-    const existsubSkill = await SubSkill.findOne({ title: title });
+
+    const existsubSkill = await SubSkill.findOne({ title: new RegExp('^' + title + '$', 'i') });
 
     if (existsubSkill) {
         throw new ApiError(400, "Sub-Skill already exist");
@@ -57,7 +58,7 @@ const changeStatus = async (subskillId, status) => {
 const deleteSubSkill = async (subskillId) => {
     const updatedSubSkill = await SubSkill.findByIdAndUpdate(
         subskillId,
-        { isDeleted: 1 }, 
+        { isDeleted: 1 },
         { new: true }
     );
 
@@ -67,4 +68,4 @@ const deleteSubSkill = async (subskillId) => {
 
 
 
-export { getSubSkill, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus,deleteSubSkill };
+export { getSubSkill, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus, deleteSubSkill };

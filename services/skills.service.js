@@ -23,7 +23,7 @@ const addNewSkill = async (body, file) => {
         throw new ApiError(400, "Image file is required");
     }
 
-    const existSkill = await Skill.findOne({ title: title });
+    const existSkill = await Skill.findOne({ title: new RegExp('^' + title + '$', 'i') });
 
     if (existSkill) {
         throw new ApiError(400, "Skill already exist");
