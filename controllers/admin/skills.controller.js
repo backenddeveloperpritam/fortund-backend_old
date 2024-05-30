@@ -68,5 +68,14 @@ const changeStatus = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, result, "Skill Updated successfully"));
 })
 
+const deleteSkill = asyncHandler(async (req, res) => {
+    const { skillId } = req.body;
+    const result = await skillService.deleteSkill(skillId);
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No Skill found");
+    }
+    return res.status(200).json(new ApiResponse(200, {}, "Skills delleted successfully"));
+})
 
-export { skillsList, getSkillsById, addNewSkills, updateSkill, updateImage, changeStatus };
+
+export { skillsList, getSkillsById, addNewSkills, updateSkill, updateImage, changeStatus, deleteSkill };

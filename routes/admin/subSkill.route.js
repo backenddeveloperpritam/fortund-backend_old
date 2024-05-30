@@ -32,4 +32,9 @@ router.post("/sub-skill/change-status",
     SubSkillController.changeStatus
 );
 
+router.post("/sub-skill/delete",
+    validate(SubskillValidation.deleteSubSkill),
+    SubSkillController.deleteSubSkill
+);
+
 export default router;

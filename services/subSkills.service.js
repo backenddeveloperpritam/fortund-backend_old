@@ -3,7 +3,7 @@ import SubSkill from "../models/adminModel/SubSkills.js";
 
 const getSubSkill = async () => {
 
-    const subskills = await SubSkill.find({});
+    const subskills = await SubSkill.find({}).populate('skill', 'title');
     return subskills;
 };
 
@@ -54,5 +54,17 @@ const changeStatus = async (subskillId, status) => {
     return subskill;
 };
 
+const deleteSubSkill = async (subskillId) => {
+    const updatedSubSkill = await SubSkill.findByIdAndUpdate(
+        subskillId,
+        { isDeleted: 1 }, 
+        { new: true }
+    );
 
-export { getSubSkill, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus };
+    return updatedSubSkill;
+};
+
+
+
+
+export { getSubSkill, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus,deleteSubSkill };

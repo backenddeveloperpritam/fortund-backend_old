@@ -37,6 +37,11 @@ const changeStatus = {
         status: Joi.string().valid("Active", "InActive").required(),
     }),
 };
+const deleteSubSkill = {
+    body: Joi.object().keys({
+        subskillId: Joi.string().required(),
+    }),
+};
 
 export {
     getSkills,
@@ -44,4 +49,5 @@ export {
     addNewSubSkill,
     updateSubSkill,
     changeStatus,
+    deleteSubSkill
 };

@@ -39,4 +39,10 @@ router.post("/change-status",
     SkillController.changeStatus
 );
 
+router.post("/skill/delete",
+    validate(skillValidation.deleteSkill),
+    SkillController.deleteSkill
+);
+
+
 export default router;

@@ -39,11 +39,18 @@ const changeStatus = {
     }),
 };
 
+const deleteSkill = {
+    body: Joi.object().keys({
+        skillId: Joi.string().required(),
+    }),
+};
+
 export {
     getSkills,
     getSkillsById,
     addNewSkill,
     updateSkill,
     changeStatus,
-    updateImage
+    updateImage,
+    deleteSkill
 };

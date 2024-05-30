@@ -6,10 +6,8 @@ import httpStatus from 'http-status';
 
 
 const subSkillsList = asyncHandler(async (req, res) => {
-    console.log("test");
-    const title = req.query.title || "";
 
-    const result = await subSkillService.getSubSkill(title);
+    const result = await subSkillService.getSubSkill();
 
     return res.status(200).json(new ApiResponse(httpStatus.OK, result, "Sub - Skills fetched successfully"));
 
@@ -60,5 +58,12 @@ const changeStatus = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, result, "Sub - Skills Updated successfully"));
 })
 
+const deleteSubSkill = asyncHandler(async (req, res) => {
+    const { subskillId } = req.body;
+    const result = await subSkillService.deleteSubSkill(subskillId);
+   
+    return res.status(200).json(new ApiResponse(200, {}, "Sub - Skills delleted successfully"));
+})
 
-export { subSkillsList, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus };
+
+export { subSkillsList, getSubSkillById, addNewSubSkill, updateSubSkill, changeStatus ,deleteSubSkill};

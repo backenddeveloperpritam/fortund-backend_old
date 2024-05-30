@@ -123,4 +123,14 @@ const updateImage = async (body, file) => {
     return skill;
 }
 
-export { getSkills, addNewSkill, getSkillById, changeStatus, updateSkill, updateImage };
+const deleteSkill = async (skillId) => {
+    const updatedSkill = await Skill.findByIdAndUpdate(
+        skillId,
+        { isDeleted: 1 }, 
+        { new: true }
+    );
+
+    return updatedSkill;
+};
+
+export { getSkills, addNewSkill, getSkillById, changeStatus, updateSkill, updateImage,deleteSkill };
