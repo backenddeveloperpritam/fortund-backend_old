@@ -15,50 +15,40 @@ const categoryBlogList = asyncHandler(async (req, res) => {
 });
 
 const getBlogCategoryById = asyncHandler(async (req, res) => {
-    try {
 
-        const result = await categoryService.getBlogCategoryById(req.params.blogCategoryId);
-        if (!result) {
-            throw new ApiError(httpStatus.NOT_FOUND, "No blogCagegory found with matching id");
-        }
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(200, result, "blogCagegory fetch successfully")
-            )
 
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong fetch Category By id");
-
+    const result = await categoryService.getBlogCategoryById(req.params.blogCategoryId);
+    if (!result) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No blogCagegory found with matching id");
     }
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, result, "blogCagegory fetch successfully")
+        )
+
+
 });
 
 const addBlogCategory = asyncHandler(async (req, res) => {
-    try {
-        const { title, status } = req.body;
-        // Create a new instance of the BlogsCategory model with the provided blog category
-        const result = await categoryService.addNewBlogCategory(title, status);
+    const { title, status } = req.body;
+    // Create a new instance of the BlogsCategory model with the provided blog category
+    const result = await categoryService.addNewBlogCategory(title, status);
 
-        return res
-            .status(200)
-            .json({ success: true, result, message: "Blog category added successfully" });
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong fetch Category By id");
-    }
+    return res
+        .status(200)
+        .json({ success: true, result, message: "Blog category added successfully" });
+
 });
 
 const updateBlogCategoryById = asyncHandler(async (req, res) => {
-    try {
-        const { title, status } = req.body;
-        // Create a new instance of the BlogsCategory model with the provided blog category
-        const result = await categoryService.addNewBlogCategory(title, status);
+    const { title, status } = req.body;
+    const result = await categoryService.addNewBlogCategory(title, status);
 
-        return res
-            .status(200)
-            .json({ success: true, result, message: "Blog category added successfully" });
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong fetch Category By id");
-    }
+    return res
+        .status(200)
+        .json({ success: true, result, message: "Blog category added successfully" });
+
 });
 
 const deleteBlogCategory = asyncHandler(async (req, res) => {
@@ -70,4 +60,4 @@ const deleteBlogCategory = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, {}, "Blog Category delleted successfully"));
 })
 
-export { categoryBlogList, getBlogCategoryById, addBlogCategory, updateBlogCategoryById,deleteBlogCategory };
+export { categoryBlogList, getBlogCategoryById, addBlogCategory, updateBlogCategoryById, deleteBlogCategory };
