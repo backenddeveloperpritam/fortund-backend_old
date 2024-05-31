@@ -53,7 +53,7 @@ app.use("/api/app", astrologerRequestRoute)
 // app.use('/api/web', webRoutes);
 
 app.use("/api/admin", astrologerRoute);
-// app.use('/api/admin', blogCategoryRoute);
+// app.use('/api/admin', blogCategoryRoute);   
 app.use('/api/admin', SkillRoute);
 app.use('/api/admin', SubSkillRoute);
 app.use('/api/admin', ExpertiesRoute);
