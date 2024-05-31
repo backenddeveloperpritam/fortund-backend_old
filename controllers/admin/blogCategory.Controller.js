@@ -32,7 +32,6 @@ const getBlogCategoryById = asyncHandler(async (req, res) => {
 
 const addBlogCategory = asyncHandler(async (req, res) => {
     const { title, status } = req.body;
-    // Create a new instance of the BlogsCategory model with the provided blog category
     const result = await categoryService.addNewBlogCategory(title, status);
 
     return res

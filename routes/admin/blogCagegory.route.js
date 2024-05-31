@@ -1,7 +1,7 @@
 import express from 'express';
 import validate from "../../middlewares/validate.js";
 import * as blogCategoryValidation from '../../validations/blogCategory.validation.js';
-import * as blogCategoryController from '../../controllers/admin/blogCategory.controller.js';
+import * as blogCategoryController from '../../controllers/admin/blogcategory.controller.js';
 
 const router = express.Router();
 
