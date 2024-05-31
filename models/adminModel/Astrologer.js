@@ -212,7 +212,7 @@ const astrologerSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Active", "InActive"],
+    enum: ["Active", "Blocked"],
     default: "Active",
   },
   isDeleted: {

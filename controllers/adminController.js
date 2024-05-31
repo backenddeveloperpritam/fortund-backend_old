@@ -241,7 +241,7 @@ const deleteUser = async function (req, res) {
   }
 };
 
-const skill = function (req, res) {
+// const skill = function (req, res) {
   console.log("test", req.files);
   uploadSkill(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
@@ -290,33 +290,36 @@ const skill = function (req, res) {
       });
     }
   });
-};
+// };
 
 // get skills
-const getAllSkills = async function (req, res) {
-  try {
-    // Fetch all skills from the database
-    const skills = await Skills.find();
+// const getAllSkills = async function (req, res) {
+//   try {
+//     // Fetch all skills from the database
+//     const skills = await Skills.find();
 
-    // Return the list of skills as a JSON response
-    res.status(200).json({ success: true, skills });
-  } catch (error) {
-    console.error("Error fetching skills:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch skills",
-      error: error.message,
-    });
-  }
-};
+//     // Return the list of skills as a JSON response
+//     res.status(200).json({ success: true, skills });
+//   } catch (error) {
+//     console.error("Error fetching skills:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to fetch skills",
+//       error: error.message,
+//     });
+//   }
+// };
 
-// update Skill
 // const updateSkill = function (req, res) {
 //   uploadSkill(req, res, async function (err) {
 //     if (err instanceof multer.MulterError) {
-//       return res.status(500).json({ success: false, message: 'Multer error', error: err });
+//       return res
+//         .status(500)
+//         .json({ success: false, message: "Multer error", error: err });
 //     } else if (err) {
-//       return res.status(500).json({ success: false, message: 'Error uploading file', error: err });
+//       return res
+//         .status(500)
+//         .json({ success: false, message: "Error uploading file", error: err });
 //     }
 
 //     try {
@@ -326,161 +329,92 @@ const getAllSkills = async function (req, res) {
 //       if (!skill) {
 //         return res.status(400).json({
 //           success: false,
-//           message: 'Please provide a Skill.'
+//           message: "Please provide a Skill.",
 //         });
 //       }
 
 //       const existingSkill = await Skills.findById(skillId);
 
 //       if (!existingSkill) {
-//         return res.status(404).json({ success: false, message: 'Skill not found.' });
+//         return res
+//           .status(404)
+//           .json({ success: false, message: "Skill not found." });
 //       }
 
 //       existingSkill.skill = skill;
 
 //       // Update image path if a new image is uploaded
-//       if (req.files['image']) {
-//         const imagePath = req.files['image'][0].path.replace(/^.*skillsImage[\\/]/, 'skillsImage/');
+//       if (req.files["image"]) {
+//         const imagePath = req.files["image"][0].path.replace(
+//           /^.*skillsImage[\\/]/,
+//           "skillsImage/"
+//         );
 //         existingSkill.image = imagePath;
 //       }
 
-//       await existingSkill.save();
+//       // Update the skill without checking for uniqueness
+//       await existingSkill.save({ validateBeforeSave: false });
 
-//       res.status(200).json({ success: true, message: 'Skill updated successfully.', data: existingSkill });
+//       res.status(200).json({
+//         success: true,
+//         message: "Skill updated successfully.",
+//         data: existingSkill,
+//       });
 //     } catch (error) {
-//       console.error('Error updating Skill:', error);
-//       res.status(500).json({ success: false, message: 'Failed to update Skill.', error: error.message });
+//       console.error("Error updating Skill:", error);
+//       res.status(500).json({
+//         success: false,
+//         message: "Failed to update Skill.",
+//         error: error.message,
+//       });
 //     }
 //   });
 // };
 
-const updateSkill = function (req, res) {
-  uploadSkill(req, res, async function (err) {
-    if (err instanceof multer.MulterError) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Multer error", error: err });
-    } else if (err) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Error uploading file", error: err });
-    }
+// const deleteSkill = async function (req, res) {
+//   try {
+//     const skillId = req.body.skillId;
 
-    try {
-      const { skillId, skill } = req.body;
-
-      // Validate required fields
-      if (!skill) {
-        return res.status(400).json({
-          success: false,
-          message: "Please provide a Skill.",
-        });
-      }
-
-      const existingSkill = await Skills.findById(skillId);
-
-      if (!existingSkill) {
-        return res
-          .status(404)
-          .json({ success: false, message: "Skill not found." });
-      }
-
-      existingSkill.skill = skill;
-
-      // Update image path if a new image is uploaded
-      if (req.files["image"]) {
-        const imagePath = req.files["image"][0].path.replace(
-          /^.*skillsImage[\\/]/,
-          "skillsImage/"
-        );
-        existingSkill.image = imagePath;
-      }
-
-      // Update the skill without checking for uniqueness
-      await existingSkill.save({ validateBeforeSave: false });
-
-      res.status(200).json({
-        success: true,
-        message: "Skill updated successfully.",
-        data: existingSkill,
-      });
-    } catch (error) {
-      console.error("Error updating Skill:", error);
-      res.status(500).json({
-        success: false,
-        message: "Failed to update Skill.",
-        error: error.message,
-      });
-    }
-  });
-};
-
-//delete skill
-// const deleteSkill = async function(req, res) {
-//     try {
-//       const skillId = req.params.id;
-
-//       if (!mongoose.Types.ObjectId.isValid(skillId)) {
-//         return res.status(400).json({ success: false, message: 'Invalid Skill ID' });
-//       }
-
-//       const deletedSkill = await Skills.findByIdAndDelete(skillId);
-
-//       if (!deletedSkill) {
-//         return res.status(404).json({ success: false, message: 'Skill not found.' });
-//       }
-
-//       res.status(200).json({ success: true, message: 'Skill deleted successfully', deletedSkill });
-//     } catch (error) {
-//       console.error('Error deleting skill:', error);
-//       res.status(500).json({ success: false, message: 'Failed to delete skill', error: error.message });
+//     if (!skillId || !mongoose.Types.ObjectId.isValid(skillId)) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Invalid Skill ID" });
 //     }
-//   };
 
-const deleteSkill = async function (req, res) {
-  try {
-    const skillId = req.body.skillId;
+//     const deletedSkill = await Skills.findByIdAndDelete(skillId);
+//     const astrologerData = await Astrologer.find({ skill: { $in: [skillId] } });
 
-    if (!skillId || !mongoose.Types.ObjectId.isValid(skillId)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid Skill ID" });
-    }
+//     if (astrologerData) {
+//       for (const doc of astrologerData) {
+//         await Astrologer.updateOne(
+//           { _id: doc._id },
+//           { $pull: { skill: skillId } }
+//         );
+//       }
+//     }
 
-    const deletedSkill = await Skills.findByIdAndDelete(skillId);
-    const astrologerData = await Astrologer.find({ skill: { $in: [skillId] } });
+//     if (!deletedSkill) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Skill not found." });
+//     }
 
-    if (astrologerData) {
-      for (const doc of astrologerData) {
-        await Astrologer.updateOne(
-          { _id: doc._id },
-          { $pull: { skill: skillId } }
-        );
-      }
-    }
+//     console.log(`Skill with ID ${skillId} deleted successfully`);
 
-    if (!deletedSkill) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Skill not found." });
-    }
-
-    console.log(`Skill with ID ${skillId} deleted successfully`);
-
-    res.status(200).json({
-      success: true,
-      message: "Skill deleted successfully",
-      deletedSkill,
-    });
-  } catch (error) {
-    console.error("Error deleting skill:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to delete skill",
-      error: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Skill deleted successfully",
+//       deletedSkill,
+//     });
+//   } catch (error) {
+//     console.error("Error deleting skill:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to delete skill",
+//       error: error.message,
+//     });
+//   }
+// };
 
 // add sub skills
 const subSkill = async function (req, res) {

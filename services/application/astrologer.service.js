@@ -8,6 +8,7 @@ const getAstrologer = async (title) => {
 
         const astrologers = await Astrologer.find({
             ...titleMatch,
+            status: { $ne: 'Blocked' }
         });
 
         return astrologers;

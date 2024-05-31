@@ -3,8 +3,6 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import ApiError from "../../utils/ApiError.js";
 import * as astrologerService from '../../services/application/astrologer.service.js';
 import httpStatus from 'http-status';
-import jwt from "jsonwebtoken"
-import Astrologer from "../../models/adminModel/Astrologer.js";
 
 
 const generateAccessAndRefereshTokens = async (astrologerId, fcmToken) => {
@@ -39,10 +37,10 @@ const astrologerLogin = asyncHandler(async (req, res) => {
     }
 
     if (astrologer.isDeleted === 1) {
-        throw new ApiError(400, "Your account has been deleted, please contact admin support.");
+        throw new ApiError(400, "Your account Not Found !");
     }
 
-    if (astrologer.status == "InActive") {
+    if (astrologer.status == "Blocked") {
         throw new ApiError(400, "Your account has been Blocked, please contact admin support.");
     }
 

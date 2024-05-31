@@ -12,6 +12,9 @@ import astrologerRequestRoute from "./routes/application/astrologerRequest.route
 // import webRoutes from './routes/webRoutes.js';
 import blogCategoryRoute from "./routes/admin/blogCagegory.route.js";
 import astrologerRoute from "./routes/admin/astrologer.route.js";
+import SkillRoute from "./routes/admin/skill.route.js";
+import SubSkillRoute from "./routes/admin/subSkill.route.js";
+import ExpertiesRoute from "./routes/admin/expertise.route.js";
 
 
 import cors from "cors";
@@ -36,7 +39,7 @@ const PORT = process.env.PORT || 4000;
 app.use(express.static(__dirname));
 app.use(express.json());
 app.use(cors('*'));
-db(); 
+db();
 // // Define the API routes
 app.use("/api/app", appRoutes)
 app.use("/api/app", astroAppRoutes)
@@ -49,6 +52,9 @@ app.use("/api/app", astrologerRequestRoute)
 
 app.use("/api/admin", astrologerRoute);
 app.use('/api/admin', blogCategoryRoute);
+app.use('/api/admin', SkillRoute);
+app.use('/api/admin', SubSkillRoute);
+app.use('/api/admin', ExpertiesRoute);
 
 
 // app.use("/api/kundli", kundliRoutes) 
