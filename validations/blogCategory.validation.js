@@ -28,6 +28,9 @@ const addNewBlogCategory = {
 };
 
 const updateBlogCategory = {
+    params: Joi.object().keys({
+        blogCategoryId: Joi.string().custom(objectId).required(),
+    }),
     body: Joi.object().keys({
         title: Joi.string().required(),
         status: Joi.string().valid("Active", "InActive").optional(),
@@ -35,10 +38,16 @@ const updateBlogCategory = {
 };
 
 
+const deleteBlogCategory = {
+    body: Joi.object().keys({
+        blogCategoryId: Joi.string().required(),
+    }),
+};
 
 export {
     searchBlogCategory,
     getblogCategoryId,
     addNewBlogCategory,
-    updateBlogCategory
+    updateBlogCategory,
+    deleteBlogCategory
 };

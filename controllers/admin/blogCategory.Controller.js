@@ -5,21 +5,13 @@ import * as categoryService from '../../services/blogCategory.service.js';
 import httpStatus from 'http-status';
 
 const categoryBlogList = asyncHandler(async (req, res) => {
-    try {
-        const title = req.query.title ? req.query.title : "";
+    const result = await categoryService.getBlogCategory();
 
-        const result = await categoryService.getBlogCategory(title);
-
-        if (!result) {
-            throw new ApiError(httpStatus.NOT_FOUND, "No Category found with matching id");
-        }
-
-        return res
-            .status(200)
-            .json(new ApiResponse(200, result, "Category fetch successfully"));
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong Category not fetch");
+    if (!result) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No Category found with matching id");
     }
+
+    return res.status(200).json(new ApiResponse(200, result, "Category fetched successfully"));
 });
 
 const getBlogCategoryById = asyncHandler(async (req, res) => {
@@ -69,4 +61,13 @@ const updateBlogCategoryById = asyncHandler(async (req, res) => {
     }
 });
 
-export { categoryBlogList, getBlogCategoryById, addBlogCategory, updateBlogCategoryById };
+const deleteBlogCategory = asyncHandler(async (req, res) => {
+    const { blogCategoryId } = req.body;
+    const result = await categoryService.deleteBlogCategory(blogCategoryId);
+    if (!result || result.length === 0) {
+        throw new ApiError(httpStatus.NOT_FOUND, "No Blog Category found");
+    }
+    return res.status(200).json(new ApiResponse(200, {}, "Blog Category delleted successfully"));
+})
+
+export { categoryBlogList, getBlogCategoryById, addBlogCategory, updateBlogCategoryById,deleteBlogCategory };

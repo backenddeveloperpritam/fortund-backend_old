@@ -7,11 +7,10 @@ const router = express.Router();
 
 router.get(
     "/blog-category-list",
-    validate(blogCategoryValidation.searchBlogCategory),
     blogCategoryController.categoryBlogList
 );
 
-router.get(
+router.get( 
     "/blog-category/:blogCategoryId",
     validate(blogCategoryValidation.getblogCategoryId),
     blogCategoryController.getBlogCategoryById
@@ -19,6 +18,12 @@ router.get(
 
 router.post("/add-blog-category", validate(blogCategoryValidation.addNewBlogCategory), blogCategoryController.addBlogCategory);
 
-router.post("/update-blog-category", validate(blogCategoryValidation.updateBlogCategory), blogCategoryController.updateBlogCategoryById);
+router.post("/blog-category/update/:blogCategoryId", validate(blogCategoryValidation.updateBlogCategory), blogCategoryController.updateBlogCategoryById);
+
+router.post("/blog-category/delete",
+    validate(blogCategoryValidation.deleteBlogCategory),
+    blogCategoryController.deleteBlogCategory
+);
+
 
 export default router;

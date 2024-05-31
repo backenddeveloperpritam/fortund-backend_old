@@ -11,7 +11,7 @@ const blogsCategorySchema = new mongoose.Schema(
       type: String,
       enum: ["Active", "InActive"]
     },
-    deleted: {
+    isDeleted: {
       type: Boolean,
       default: false
     }
@@ -20,7 +20,7 @@ const blogsCategorySchema = new mongoose.Schema(
 );
 
 blogsCategorySchema.pre('find', function () {
-  this.where({ deleted: false });
+  this.where({ isDeleted: false });
 });
 
 const BlogsCategory = mongoose.model('BlogsCategory', blogsCategorySchema);
