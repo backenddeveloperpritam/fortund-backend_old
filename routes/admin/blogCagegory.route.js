@@ -10,15 +10,21 @@ router.get(
     blogCategoryController.categoryBlogList
 );
 
-router.get( 
+router.get(
     "/blog-category/:blogCategoryId",
     validate(blogCategoryValidation.getblogCategoryId),
     blogCategoryController.getBlogCategoryById
 );
 
-router.post("/add-blog-category", validate(blogCategoryValidation.addNewBlogCategory), blogCategoryController.addBlogCategory);
+router.post("/add-blog-category",
+    validate(blogCategoryValidation.addNewBlogCategory),
+    blogCategoryController.addBlogCategory
+);
 
-router.post("/blog-category/update/:blogCategoryId", validate(blogCategoryValidation.updateBlogCategory), blogCategoryController.updateBlogCategoryById);
+router.post("/blog-category/update/:blogCategoryId",
+    validate(blogCategoryValidation.updateBlogCategory),
+    blogCategoryController.updateBlogCategoryById
+);
 
 router.post("/blog-category/delete",
     validate(blogCategoryValidation.deleteBlogCategory),
