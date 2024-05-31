@@ -22,6 +22,9 @@ const blogsCategorySchema = new mongoose.Schema(
 blogsCategorySchema.pre('find', function () {
   this.where({ isDeleted: false });
 });
+blogsCategorySchema.pre('findOne', function () {
+  this.where({ isDeleted: false });
+});
 
 const BlogsCategory = mongoose.model('BlogsCategory', blogsCategorySchema);
 
